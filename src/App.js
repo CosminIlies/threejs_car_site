@@ -6,6 +6,8 @@ import { Ground } from './Ground';
 import { Car } from './Car';
 import { Rings } from './Rings';
 import { Boxes } from './Boxes'
+import { Bloom, ChromaticAberration, EffectComposer } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
  
 //$env:NODE_OPTIONS = "--openssl-legacy-provider"
 //set NODE_OPTIONS=--openssl-legacy-provider
@@ -29,10 +31,10 @@ function CarShow(){
 
         }
       </CubeCamera>
-      
+      {/* <Box key={0} color={0 % 2 === 0 ? [0.4, 0.1, 0.1] : [0.05, 0.15, 0.4]}/> */}
 
       <Ground/>
-      {/* <Boxes/> */}
+      <Boxes/>
       <Rings/>
 
       <spotLight
@@ -54,6 +56,23 @@ function CarShow(){
         castShadow
         shadow-shadowBias={-0.0001}
       />
+
+      <EffectComposer>
+        <Bloom
+          blendFunction={BlendFunction.ADD}
+          intensity={0.1}
+          width={300}
+          height={300}
+          kernelSize={5}
+          luminanceThreshold={0.15}
+          luminanceSmoothing={0.025}
+        />
+        <ChromaticAberration
+          blendFunction = {BlendFunction.NORMAL}
+          offset={[0.0002, 0.0005]}
+        />
+
+      </EffectComposer>
 
 
     </>

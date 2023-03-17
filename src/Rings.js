@@ -4,16 +4,15 @@ import { Color } from 'three';
 
 export function Rings(){
     const itemsRef = useRef([]);
-    let pos = 0;
 
     useFrame((state) => {
+        let t = state.clock.getElapsedTime();
+
+
         for(let i = 0; i < itemsRef.current.length; i++){
             let mesh = itemsRef.current[i];
-            pos += 0.001;
-            if(pos > 7){
-                pos = 0;
-            }
-            let z = (i - 7) * 3.5 + pos;
+
+            let z = (i - 7) * 3.5 + ((t * 0.4) % 3.5) * 2;
             mesh.position.set(0, 0, -z);
 
             let dist = Math.abs(z);
